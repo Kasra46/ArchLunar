@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Paradigm Shift by HTML5 UP</title>
+		<title>Tit</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="" />
@@ -22,7 +22,7 @@
 					<section class="intro">
 						<header>
 							<h1>ArchLunar</h1>
-							<p>by Kasra<a href="https://twitter.com/ajlkn">@ajlkn</a> / <a href="https://html5up.net">html5</a></p>
+							<p>by Kasra</p>
 							<ul class="actions">
 								<li><a href="#first" class="arrow scrolly"><span class="label">Next</span></a></li>
 							</ul>
@@ -35,13 +35,75 @@
 				<!-- Section -->
 					<section id="first">
 						<header>
-							<h2>Magna sed nullam nisl adipiscing</h2>
+							<h2>Whole bunch of stuff here to look at</h2>
 						</header>
 						<div class="content">
 							<p><strong>Lorem ipsum dolor</strong> sit amet consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor amet fermentum. Nullam venenatis erat id vehicula ultrices sed ultricies condimentum. Magna sed etiam consequat, et lorem adipiscing sed nulla. Volutpat nisl et tempus et dolor libero, feugiat magna tempus, sed et lorem adipiscing.</p>
 							<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
 						</div>
 					</section>
+
+
+						<canvas id="bloodCanvas"></canvas>
+						<script>
+							const canvas = document.getElementById("bloodCanvas");
+							const ctx = canvas.getContext("2d");
+							canvas.width = 800;
+							canvas.height = 400;
+							
+							class BloodCell {
+								constructor(x, y, color, speed) {
+									this.x = x;
+									this.y = y;
+									this.color = color;
+									this.speed = speed;
+									this.radius = 5;
+								}
+								move() {
+									this.x += this.speed;
+									if (this.x > canvas.width) this.x = -10;
+								}
+								draw() {
+									ctx.beginPath();
+									ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+									ctx.fillStyle = this.color;
+									ctx.fill();
+									ctx.closePath();
+								}
+							}
+							
+							let bloodCells = [];
+							for (let i = 0; i < 50; i++) {
+								let x = Math.random() * canvas.width;
+								let y = 100 + Math.random() * 100;
+								let speed = 1 + Math.random() * 2;
+								bloodCells.push(new BloodCell(x, y, "red", speed));
+							}
+							
+							let deoxygenatedCells = [];
+							for (let i = 0; i < 20; i++) {
+								let x = Math.random() * canvas.width;
+								let y = 250 + Math.random() * 50;
+								let speed = 0.5 + Math.random();
+								deoxygenatedCells.push(new BloodCell(x, y, "darkred", speed));
+							}
+							
+							function animate() {
+								ctx.clearRect(0, 0, canvas.width, canvas.height);
+								bloodCells.forEach(cell => {
+									cell.move();
+									cell.draw();
+								});
+								deoxygenatedCells.forEach(cell => {
+									cell.move();
+									cell.draw();
+								});
+								requestAnimationFrame(animate);
+							}
+							
+							animate();
+						</script>
+
 
 				<!-- Section -->
 					<section>
